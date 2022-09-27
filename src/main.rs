@@ -5,7 +5,6 @@ use std::fs::read_dir;
 use std::fs::File;
 use std::io;
 use std::io::{BufReader, Result};
-//use std::env;
 use clap::Parser;
 use std::path::Path;
 
