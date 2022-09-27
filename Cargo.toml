@@ -3,8 +3,16 @@ name = "myhasher"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "mylib"
+path = "src/myhasher.rs"
+
+[[bin]]
+name = "mybin"
+path = "src/main.rs"
 
 [dependencies]
 sha2 = "0.10.2"
 generic-array = "0.14.5"
+clap = { version = "3.2.22", features = ["derive"] }
