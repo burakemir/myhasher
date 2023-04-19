@@ -13,6 +13,6 @@ name = "mybin"
 path = "src/main.rs"
 
 [dependencies]
+hex = "0.4.3"
 sha2 = "0.10.2"
-generic-array = "0.14.5"
 clap = { version = "3.2.22", features = ["derive"] }

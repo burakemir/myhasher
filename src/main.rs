@@ -7,6 +7,7 @@ use std::io;
 use std::io::{BufReader, Result};
 use clap::Parser;
 use std::path::Path;
+use hex;
 
 /// Simple program to hash input from stin, a file, or a dir.
 #[derive(Parser, Debug)]
@@ -24,7 +25,7 @@ struct Args {
 fn hash_file(file: &File, name: String) -> Result<()> {
     let mut buf_reader = BufReader::new(file);
     let work = hash(&mut buf_reader, name)?;
-    println!("{:x} {}", work.hash, work.filename);
+    println!("{} {}", hex::encode(work.hash), work.filename);
     Ok(())
 }
 
@@ -32,7 +33,7 @@ fn main() -> Result<()> {
     let args = Args::parse();
     if args.names.is_empty() && args.dir.is_none() {
         let work = hash(&mut io::stdin().lock(), "".to_string())?;
-        println!("{:x} stdin", work.hash);
+        println!("{} stdin", hex::encode(work.hash));
         return Ok(());
     }
 
