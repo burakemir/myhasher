@@ -21,8 +21,8 @@ $ touch Cargo.Bazel.lock
 $ CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index
 ```
 
-After that, it will be synced automatically.
-With dependencies synced, we can build like this:
+You also need to do this when the file is out of sync with `Cargo.toml` (when you change dependencies there).
+With the Bazel lockfile in sync, we can build like this:
 
 ```
 $ bazelisk build //:myhasher
@@ -37,3 +37,8 @@ INFO: Build completed successfully, 1 total action
 INFO: Running command line: bazel-bin/myhasher /home/buraq/projects/rust/myhasher/foo.txt
 d9014c4624844aa5bac314773d6b689ad467fa4e1d1a50a1b8a99d5a95f72ff5 /home/buraq/projects/rust/myhasher/foo.txt
 ```
+
+This may seem pointless since there is no BUILD target that
+does not gets its dependencies from `Cargo.toml`. This is
+still a toy program, but it can change to include targets
+with "direct dependencies" which will only be known to Bazel.
