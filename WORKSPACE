@@ -12,6 +12,10 @@ load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_regi
 
 rules_rust_dependencies()
 
+load("@rules_rust//util/import:deps.bzl", "import_deps")
+
+import_deps()
+
 rust_register_toolchains()
 
 load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
@@ -21,7 +25,7 @@ crate_universe_dependencies()
 load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "render_config")
 
 crates_repository(
-    name = "crate_index",
+    name = "third_party",
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:Cargo.Bazel.lock",
     packages = {
@@ -37,7 +41,7 @@ crates_repository(
     ),
 )
 
-load("@crate_index//:defs.bzl", "crate_repositories")
+load("@third_party//:defs.bzl", "crate_repositories")
 
 crate_repositories()
 

@@ -1,6 +1,11 @@
-use std::io::Result;
+import::import! {
+    "//third_party/sha2";
+}
+
 use std::io::prelude::BufRead;
-use sha2::{Sha256, Digest};
+use std::io::Result;
+
+use sha2::{Digest, Sha256};
 
 #[derive(Clone)]
 pub struct FileWithHash {
@@ -9,10 +14,10 @@ pub struct FileWithHash {
 }
 
 pub fn hash(buf_reader: &mut dyn BufRead, filename: String) -> Result<FileWithHash> {
-    let mut hasher = Sha256::new(); 
+    let mut hasher = Sha256::new();
     std::io::copy(buf_reader, &mut hasher)?;
-    return Ok(FileWithHash {
-        filename: filename,
+    Ok(FileWithHash {
+        filename,
         hash: hasher.finalize().into(),
-    });
+    })
 }
