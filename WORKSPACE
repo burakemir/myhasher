@@ -18,15 +18,26 @@ load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencie
 
 crate_universe_dependencies()
 
-load("@rules_rust//crate_universe:defs.bzl", "crates_repository")
+load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "render_config")
 
 crates_repository(
     name = "crate_index",
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:Cargo.Bazel.lock",
-    manifests = ["//:Cargo.toml"],
+    packages = {
+        "hex": crate.spec( version = "0.4.3", ),
+        "sha2": crate.spec( version = "0.10.2" ),
+        "clap": crate.spec( version = "3.2.22", features = ["derive"] ),
+    },
+    # Setting the default package name to `""` forces the use of the macros defined in this repository
+    # to always use the root package when looking for dependencies or aliases. This should be considered
+    # optional as the repository also exposes alises for easy access to all dependencies.
+    render_config = render_config(
+        default_package_name = ""
+    ),
 )
 
 load("@crate_index//:defs.bzl", "crate_repositories")
 
 crate_repositories()
+

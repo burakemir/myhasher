@@ -1,6 +1,4 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary")
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-
 rust_binary(
     name = "myhasher",
     srcs = [
@@ -8,7 +6,9 @@ rust_binary(
         "src/myhasher.rs",
     ],
     edition = "2021",
-    deps = all_crate_deps(
-        normal = True,
-    ),
+    deps = [
+        "@crate_index//:hex",
+        "@crate_index//:sha2",
+        "@crate_index//:clap",
+    ],
 )
