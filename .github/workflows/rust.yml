@@ -16,7 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: bazelbuild/setup-bazelisk@v2
+    - name: Mount bazel cache  # Optional
+      uses: actions/cache@v3
+      with:
+        path: "~/.cache/bazel"
+        key: bazel
     - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      run: bazel build //:myhasher
+    - name: Clippy Test
+      run: bazel test //:myhasher_clippy
