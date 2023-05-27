@@ -23,7 +23,7 @@ jobs:
         path: "~/.cache/bazel"
         key: bazel
     - name: Get crates
-      run: CARGO_BAZEL_REPIN=1 bazel sync --only=third_party
+      run: touch Cargo.Bazel.lock && CARGO_BAZEL_REPIN=1 bazel sync --only=third_party
     - name: Build
       run: bazel build //:myhasher
     - name: Clippy Test
