@@ -4,10 +4,8 @@ import::import! {
     "//third_party/clap";
 }
 
-mod myhasher;
-
 use clap::Parser;
-use myhasher::hash;
+use myhasher_lib as myhasher;
 use std::fs::read_dir;
 use std::fs::File;
 use std::io;
@@ -27,9 +25,9 @@ struct Args {
     dir: Option<String>,
 }
 
-fn hash_file(file: &File, name: String) -> Result<()> {
+fn hash_file(file: &File, name: &str) -> Result<()> {
     let mut buf_reader = BufReader::new(file);
-    let work = hash(&mut buf_reader, name)?;
+    let work = myhasher::hash(&mut buf_reader, name)?;
     println!("{} {}", hex::encode(work.hash), work.filename);
     Ok(())
 }
@@ -37,14 +35,14 @@ fn hash_file(file: &File, name: String) -> Result<()> {
 fn main() -> Result<()> {
     let args = Args::parse();
     if args.names.is_empty() && args.dir.is_none() {
-        let work = hash(&mut io::stdin().lock(), "".to_string())?;
+        let work = myhasher::hash(&mut io::stdin().lock(), "")?;
         println!("{} stdin", hex::encode(work.hash));
         return Ok(());
     }
 
     for arg in args.names {
         let file = File::open(arg.as_str())?;
-        hash_file(&file, arg)?
+        hash_file(&file, arg.as_str())?
     }
 
     if let Some(dir) = args.dir.as_deref() {
@@ -59,7 +57,7 @@ fn main() -> Result<()> {
             let path = entry.path();
             if path.is_file() {
                 let file = File::open(&path)?;
-                hash_file(&file, path.to_string_lossy().to_string())?
+                hash_file(&file, &path.to_string_lossy())?
             }
         }
     }

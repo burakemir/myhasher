@@ -1,26 +1,59 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_clippy")
+# This bazel package contains sources for the "myhasher" command-line tool.
+# Keep BUILD.bazel formatted with `buildifier BUILD.bazel`
+# Keep source files formatted with `bazelisk run @rules_rust//:rustfmt`
+load(
+    "@rules_rust//rust:defs.bzl",
+    "rust_binary",
+    "rust_clippy",
+    "rust_library",
+    "rust_test",
+    "rustfmt_test",
+)
+
+rust_library(
+    name = "myhasher_lib",
+    srcs = ["src/myhasher.rs"],
+    edition = "2021",
+    deps = [
+        "@third_party//:sha2",
+    ],
+)
 
 rust_binary(
     name = "myhasher",
     srcs = [
         "src/main.rs",
-        "src/myhasher.rs",
     ],
     edition = "2021",
+    proc_macro_deps = [
+        "@rules_rust//util/import",
+    ],
     deps = [
+        ":myhasher_lib",
+        "@third_party//:clap",
+        "@third_party//:googletest",
         "@third_party//:hex",
         "@third_party//:sha2",
-        "@third_party//:clap",
     ],
-    proc_macro_deps = [
-        "@rules_rust//util/import"
-    ]
 )
 
-rust_clippy(
-    name = "myhasher_clippy",
-    testonly = True,
+rust_test(
+    name = "myhasher_test",
+    size = "small",
+    crate = "myhasher_lib",
     deps = [
+        "@third_party//:googletest",
+        "@third_party//:hex",
+    ],
+)
+
+# If this fails, you need to run:
+#   bazelisk run @rules_rust//:rustfmt
+rustfmt_test(
+    name = "myhasher_fmt",
+    size = "small",
+    targets = [
+        ":myhasher_lib",
         ":myhasher",
     ],
 )
