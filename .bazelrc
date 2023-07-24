@@ -2,3 +2,5 @@ build --@rules_rust//rust/settings:use_real_import_macro
 test --@rules_rust//rust/settings:use_real_import_macro
 run --@rules_rust//rust/settings:use_real_import_macro
 
+build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build --output_groups=+clippy_checks
