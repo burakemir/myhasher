@@ -26,5 +26,5 @@ jobs:
       run: touch Cargo.Bazel.lock && CARGO_BAZEL_REPIN=1 bazel sync --only=third_party
     - name: Build
       run: bazel build //:myhasher
-    - name: Clippy
-      run: bazel build //:myhasher_clippy && test -f bazel-bin/myhasher.clippy.ok
+    - name: Test
+      run: bazel test //...
