@@ -27,9 +27,9 @@ crates_repository(
     lockfile = "//:Cargo.Bazel.lock",
     packages = {
         "hex": crate.spec( version = "0.4.3", ),
-        "sha2": crate.spec( version = "0.10.2" ),
-        "clap": crate.spec( version = "3.2.22", features = ["derive"] ),
-        "googletest": crate.spec( version = "0.9.0" ),
+        "sha2": crate.spec( version = "0.10.8" ),
+        "clap": crate.spec( version = "4.5.4", features = ["derive"] ),
+        "googletest": crate.spec( version = "0.11.0" ),
     },
     # Setting the default package name to `""` forces the use of the macros defined in this repository
     # to always use the root package when looking for dependencies or aliases. This should be considered
