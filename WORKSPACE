@@ -2,19 +2,16 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # To find additional information on this release or newer ones visit:
 # https://github.com/bazelbuild/rules_rust/releases
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_rust",
-    sha256 = "950a3ad4166ae60c8ccd628d1a8e64396106e7f98361ebe91b0bcfe60d8e4b60",
-    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.20.0/rules_rust-v0.20.0.tar.gz"],
+    integrity = "sha256-mUV3N2A8ORVVZbrm3O9yepAe/Kv4MD2ob9YQhB8aOI8=",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.41.1/rules_rust-v0.41.1.tar.gz"],
 )
 
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
 
 rules_rust_dependencies()
-
-load("@rules_rust//util/import:deps.bzl", "import_deps")
-
-import_deps()
 
 rust_register_toolchains()
 
@@ -45,4 +42,8 @@ crates_repository(
 load("@third_party//:defs.bzl", "crate_repositories")
 
 crate_repositories()
+
+load("@rules_rust//tools/rust_analyzer:deps.bzl", "rust_analyzer_dependencies")
+
+rust_analyzer_dependencies()
 

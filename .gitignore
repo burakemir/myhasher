@@ -2,4 +2,5 @@
 *~
 Cargo.Bazel.lock
 bazel-*
+rust-project.json
 

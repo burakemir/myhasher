@@ -1,9 +1,3 @@
-import::import! {
-    "//third_party/hex";
-    "//third_party/sha2";
-    "//third_party/clap";
-}
-
 use clap::Parser;
 use myhasher_lib as myhasher;
 use std::fs::read_dir;

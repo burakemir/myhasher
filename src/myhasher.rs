@@ -1,7 +1,3 @@
-import::import! {
-    "//third_party/sha2";
-}
-
 use std::io::prelude::BufRead;
 use std::io::Result;
 
@@ -25,10 +21,6 @@ pub fn hash(buf_reader: &mut dyn BufRead, filename: &str) -> Result<FileWithHash
 
 #[cfg(test)]
 mod tests {
-    import::import! {
-        "//third_party/hex";
-        "//third_party/googletest";
-    }
     use googletest::prelude::*;
 
     #[test]
