@@ -25,9 +25,6 @@ rust_binary(
         "src/main.rs",
     ],
     edition = "2021",
-    proc_macro_deps = [
-        "@rules_rust//util/import",
-    ],
     deps = [
         ":myhasher_lib",
         "@third_party//:clap",
